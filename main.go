@@ -17,7 +17,7 @@ var DesktopSession = os.Getenv("DESKTOP_SESSION")
 // ErrUnsupportedDE is thrown when Desktop is not a supported desktop environment.
 var ErrUnsupportedDE = errors.New("your desktop environment is not supported")
 
-func downloadImage(url string) (string, error) {
+func downloadImage(url string,client *http.Client) (string, error) {
 	cacheDir, err := getCacheDir()
 	if err != nil {
 		return "", err
@@ -30,7 +30,7 @@ func downloadImage(url string) (string, error) {
 	}
 	defer file.Close()
 
-	res, err := http.Get(url)
+	res, err := client.Get(url)
 	if err != nil {
 		return "", err
 	}

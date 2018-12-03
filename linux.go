@@ -71,7 +71,7 @@ func SetFromFile(file string) error {
 //
 // In GNOME, it sets org.gnome.desktop.background.picture-uri to the URL.
 // In other desktops, it downloads the image and calls SetFromFile.
-func SetFromURL(url string) error {
+func SetFromURL(url string,client *http.Client) error {
 	switch Desktop {
 	// only some GNOME-based desktops support urls for picture-uri
 	case "GNOME", "ubuntu:GNOME":
@@ -79,7 +79,7 @@ func SetFromURL(url string) error {
 	case "i3":
 		return exec.Command("feh", "--bg-fill", url).Run()
 	default:
-		filename, err := downloadImage(url)
+		filename, err := downloadImage(url,client)
 		if err != nil {
 			return err
 		}

@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+  "net/http"
 )
 
 // Get returns the path to the current wallpaper.
@@ -27,8 +28,8 @@ func SetFromFile(file string) error {
 }
 
 // SetFromURL downloads `url` and calls SetFromFile.
-func SetFromURL(url string) error {
-	file, err := downloadImage(url)
+func SetFromURL(url string,client *http.Client) error {
+	file, err := downloadImage(url,client)
 	if err != nil {
 		return err
 	}

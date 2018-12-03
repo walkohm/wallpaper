@@ -7,6 +7,7 @@ import (
 	"strings"
 	"syscall"
 	"unicode/utf16"
+  "net/http"
 	"unsafe"
 )
 
@@ -58,8 +59,8 @@ func SetFromFile(filename string) error {
 }
 
 // SetFromURL downloads url and calls SetFromFile.
-func SetFromURL(url string) error {
-	file, err := downloadImage(url)
+func SetFromURL(url string,client *http.Client) error {
+	file, err := downloadImage(url,client)
 	if err != nil {
 		return err
 	}
